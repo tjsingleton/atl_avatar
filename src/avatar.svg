@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+onload="init(evt)">
+  <script type="text/ecmascript">
+    <![CDATA[                 
+    function init(evt)
+    {
+        if ( window.svgDocument == null )
+        {
+            svgDocument = evt.target.ownerDocument;
+        }
+
+        maximum_length = 150;
+        fg_text = svgDocument.getElementById('fg-text');
+        bg_text = svgDocument.getElementById('bg-text');
+        
+        bg_text_path = svgDocument.getElementById('bg-text-path');
+        fg_text_path = svgDocument.getElementById('fg-text-path');
+
+        name = svgDocument.location.search.replace("?", "");
+        fg_text_path.appendChild(svgDocument.createTextNode(name));
+        bg_text_path.appendChild(svgDocument.createTextNode(name));
+        
+
+        for (var font_size=55; font_size>0; font_size--)
+        {
+            fg_text.setAttributeNS(null, "font-size", font_size);
+            bg_text.setAttributeNS(null, "font-size", font_size);
+
+            if(fg_text.getComputedTextLength() < maximum_length){break;}
+        }
+        document.renderReady = true;
+    }
+
+    ]]>
+  </script>
+  <defs>
+    <pattern id="img1" patternUnits="userSpaceOnUse" width="320" height="320">
+      <image xlink:href="bg.jpg" x="0" y="0" width="320" height="320" />
+    </pattern>
+    
+    <path id="path1" d="M20,90 a120,190 0 0,1 157,0" />
+  </defs>
+
+  <rect width="320" height="320" fill="url(#img1)" />
+  
+  <text id="bg-text" font-family='Cheap Fire' fill="#FFCC33" text-anchor="middle" opacity="0.50">
+    <textPath id="bg-text-path" xlink:href="#path1" startOffset="50%" stroke="red" stroke-width="5"></textPath>
+  </text>
+  
+  <text id="fg-text" font-family='Cheap Fire' fill="#FFCC33" text-anchor="middle" opacity="0.95">
+    <textPath id="fg-text-path" xlink:href="#path1" startOffset="50%"></textPath>
+  </text>
+</svg>
